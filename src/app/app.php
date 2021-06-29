@@ -1,8 +1,8 @@
 <?php
 use DI\Container;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 // Container de Slim ...
@@ -12,13 +12,17 @@ $settings($container);
 
 AppFactory::setContainer($container);
 $app = AppFactory::create();
+// Plantilla ...
+// Create Twig ...
+$twig = Twig::create(__DIR__ . '/../resources/Views', ['cache' => false]);
+// Add Twig-View Middleware
+$app->add(TwigMiddleware::create($app, $twig));
 // Middleware salida 404 ...
 $middleware = require_once __DIR__ . './Middleware/Middleware.php';
 $middleware($app);
 
-$app->get('/', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Hello world!");
-    return $response;
-});
+// Rutas ...
+$routes = require_once __DIR__ . '/../resources/Routes/web.php';
+$routes($app);
 
 $app->run();
