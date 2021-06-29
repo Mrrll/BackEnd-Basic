@@ -1,14 +1,11 @@
 <?php
+// TODO: Archivo de rutas Slim ...
+// *: Importamos las classes necesarias ...
 use Slim\App;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
+// *: Creamos rutas ...
 return function (App $app)
 {
-    $app->get('/', function (Request $request, Response $response, $args) {
-        // $response->getBody()->write("Hello world!");
-        // return $response;
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'welcom.twig', []);
-    });
-};
+    $app->get('/', 'IndexController:index')->setName('welcom');
+}; // ?: funcion de retorno y solicitud de la App ...
