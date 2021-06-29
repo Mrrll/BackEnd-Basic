@@ -25,6 +25,9 @@ $app->add(TwigMiddleware::create($app, $container->get('view')));
 $container->set('IndexController', function ($container) {
     return new \App\Controllers\IndexController($container);
 });
+$container->set('RegisterController', function ($container) {
+    return new \App\Controllers\Auth\RegisterController($container);
+});
 // *: Middleware salida 404 ...
 $middleware = require_once __DIR__ . './Middleware/Middleware.php';
 $middleware($app);

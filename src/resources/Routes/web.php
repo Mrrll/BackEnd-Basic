@@ -8,4 +8,5 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 return function (App $app)
 {
     $app->get('/', 'IndexController:index')->setName('welcom');
+    $app->get('/register', 'RegisterController:index')->setName('auth.register');
 }; // ?: funcion de retorno y solicitud de la App ...
