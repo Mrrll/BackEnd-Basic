@@ -9,7 +9,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Edgar\\Prueba01\\": "src/"
+            "App\\": "src/app"
         }
     },
     "authors": [
