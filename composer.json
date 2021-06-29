@@ -1,0 +1,21 @@
+{
+    "name": "edgar/prueba01",
+    "description": "Prueba de Slim 4",
+    "type": "project",
+    "require": {
+        "slim/slim": "^4.8",
+        "slim/psr7": "^1.4"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Edgar\\Prueba01\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mrrll",
+            "email": "edgarmarrollo@gmail.com"
+        }
+    ]
+}
