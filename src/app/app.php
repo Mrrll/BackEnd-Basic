@@ -5,6 +5,11 @@ use DI\Container;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Cache\FilesystemCache;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\Tools\Setup;
 // *: Importamos el Autoload de las classes ...
 require_once __DIR__ . '/../../vendor/autoload.php';
 //* Container de Slim DI ...
@@ -14,6 +19,27 @@ $settings($container); // ?: Añadimos al contenedor ...
 // *: Crear App con la Fabrica Slim ...
 AppFactory::setContainer($container); // ?: Añadimos a la aplicacion ...
 $app = AppFactory::create(); // ?: Creamos la instancia app ...
+
+// *: Agregar servicio de Doctrine a su contenedor ...
+$container->set(EntityManager::class, static function (
+    Container $container
+): EntityManager {
+    $settings = $container->get('settings');
+
+    $isDevMode = true;
+    $proxyDir = null;
+    $cache = null;
+    $useSimpleAnnotationReader = false;
+    $config = Setup::createAnnotationMetadataConfiguration(
+        [__DIR__ . '/src'],
+        $isDevMode,
+        $proxyDir,
+        $cache,
+        $useSimpleAnnotationReader
+    );
+
+    return EntityManager::create($settings['doctrine']['connection'], $config);
+});
 // *: Agregar servicio de vista a su contenedor ...
 $container->set('view', function ($container) {
     // *: Motor de Plantilla Twig ...

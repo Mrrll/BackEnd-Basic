@@ -7,7 +7,7 @@
         "slim/psr7": "^1.4",
         "php-di/php-di": "^6.3",
         "slim/twig-view": "^3.2",
-        "doctrine/orm": "^2.9"
+        "doctrine/orm": "2.6.6"
     },
     "license": "MIT",
     "autoload": {

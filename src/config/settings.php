@@ -14,7 +14,7 @@ return function (Container $container) {
                 // make sure the path exists and it is writable
                 'cache_dir' => __DIR__ . '/../cache/doctrine',
                 // you should add any other path containing annotated entity classes
-                'metadata_dirs' => [__DIR__ . '/../src/app/app.php'],
+                'metadata_dirs' => [__DIR__ . '/../src/app/Models'],
 
                 'connection' => [
                     'host' => 'localhost',
