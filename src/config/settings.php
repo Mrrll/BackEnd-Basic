@@ -17,15 +17,11 @@ return function (Container $container) {
                 'metadata_dirs' => [__DIR__ . '/../src/app/Models'],
 
                 'connection' => [
+                    'dbname' => 'securitywolf',
+                    'user' => 'root',
+                    'password' => '',
                     'host' => 'localhost',
-                    'user' => 'SYSTEM',
-                    'password' => 'Ora69#LLmDB',
-                    'port' => 1521,
-                    'dbname' => 'securitywolfdb',
-                    'service' => TRUE,
-                    'servicename' => 'securitywolf',
-                    'charset ' => 'UTF8',
-                    'driver' => 'oci8',
+                    'driver' => 'pdo_mysql',
                 ],
             ],
         ];
