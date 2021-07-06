@@ -1,5 +1,8 @@
 <?php
 use DI\Container;
+use \Dotenv\Dotenv;
+// *: Carga las variables de entorno ...
+Dotenv::createImmutable(__DIR__ .'/../../')->load();
 return function (Container $container) {
     $container->set('settings', function () {
         return [
@@ -17,11 +20,11 @@ return function (Container $container) {
                 'metadata_dirs' => [__DIR__ . '/../src/app/Models'],
 
                 'connection' => [
-                    'dbname' => 'securitywolf',
-                    'user' => 'root',
-                    'password' => '',
-                    'host' => 'localhost',
-                    'driver' => 'pdo_mysql',
+                    'dbname' => $_ENV[ 'DATABASE_NAME' ],
+                    'user' => $_ENV[ 'DATABASE_USER' ],
+                    'password' => $_ENV[ 'DATABASE_PASSWD' ],
+                    'host' => $_ENV[ 'DATABASE_HOST' ],
+                    'driver' => $_ENV[ 'DATABASE_DRIVER' ],
                 ],
             ],
         ];
