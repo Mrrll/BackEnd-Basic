@@ -16,7 +16,7 @@ $container->set(EntityManager::class, static function (
     $cache = null;
     $useSimpleAnnotationReader = false;
     $config = Setup::createAnnotationMetadataConfiguration(
-        [__DIR__ . './src'],
+        [__DIR__ . './'],
         $isDevMode,
         $proxyDir,
         $cache,
