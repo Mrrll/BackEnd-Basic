@@ -30,10 +30,4 @@ $container->set('view', function ($container) {
     // *: Motor de Plantilla Twig ...
     return Twig::create(__DIR__ . '/../resources/Views', ['cache' => false]);
 });
-// *: Agregar servicio de IndexController a su contenedor ...
-$container->set('IndexController', function ($container) {
-    return new \App\Controllers\IndexController($container);
-});
-$container->set('RegisterController', function ($container) {
-    return new \App\Controllers\Auth\RegisterController($container);
-});
+require_once __DIR__ . "./controllers.php";
