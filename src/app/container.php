@@ -1,5 +1,6 @@
 <?php
 // TODO: Archivo de Configuracion de los Servicios del contenedor Slim ...
+require_once __DIR__ . "/../../vendor/autoload.php";
 // *: Importamos las classes necesarias ...
 use DI\Container;
 use Slim\Views\Twig;
@@ -9,8 +10,8 @@ use Doctrine\ORM\Tools\Setup;
 $container->set(EntityManager::class, static function (
     Container $container
 ): EntityManager {
-    $settings = $container->get('settings');
-
+    $settings = $container->get('settings'); // ?: obtener parametros de configuracion ...
+    // *: Parametros de configuracion AnnotationMetadata ...
     $isDevMode = true;
     $proxyDir = null;
     $cache = null;
@@ -21,9 +22,8 @@ $container->set(EntityManager::class, static function (
         $proxyDir,
         $cache,
         $useSimpleAnnotationReader
-    );
-
-    return EntityManager::create($settings['doctrine']['connection'], $config);
+    ); // ?: Metodo de configuracion de doctrine ...
+    return EntityManager::create($settings['doctrine']['connection'], $config); // ?: Creamos y devolvemos la instancia ...
 });
 // *: Agregar servicio de vista a su contenedor ...
 $container->set('view', function ($container) {
