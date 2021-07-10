@@ -53,16 +53,25 @@ class Usuarios
      */
     private $createdAt;
 
-    public function create(array $datos)
+    public function __contruct(String $name, String $email, String $password)
     {
-        $this->name = $datos['name'];
-        $this->email = $datos['email'];
-        $this->password = password_hash($datos['password'],PASSWORD_DEFAULT);
-        $this->setCreatedAt();
+        $this->name = $name;
+        $this->email = $email;
+        $this->password = password_hash($password,PASSWORD_DEFAULT);
+        $this->setDataTimeAt();
     }
-    public function setCreatedAt()
+    public function getName() : string
+    {
+        return $this->name;
+    }
+    public function setName(String $name) : void
+    {
+        $this->name = $name;
+    }
+    public function setDataTimeAt()
     {
         $this->createdAt = new \DateTime('now');
+        $this->updatedAt = new \DateTime('now');
     }
     public function setUpdateAt()
     {
