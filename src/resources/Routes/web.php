@@ -9,4 +9,6 @@ return function (App $app)
 {
     $app->get('/', 'IndexController:index')->setName('welcom');
     $app->get('/register', 'RegisterController:index')->setName('auth.register');
+    $app->post('/register', 'RegisterController:register');
+    // *: Ruta de la autentificacion ...
 }; // ?: funcion de retorno y solicitud de la App ...

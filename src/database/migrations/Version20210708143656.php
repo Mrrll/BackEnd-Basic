@@ -23,8 +23,8 @@ final class Version20210708143656 extends AbstractMigration
         $Table->addColumn("name", "string", array("length" => 255));
         $Table->addColumn("email", "string", array("length" => 255));
         $Table->addColumn("password", "string", array("length" => 255));
-        $Table->addColumn("updated_at", "datetime");
-        $Table->addColumn("created_at", "datetime");
+        $Table->addColumn("updated_at", "datetime", array("notnull " => false));
+        $Table->addColumn("created_at", "datetime", array("notnull " => false));
         $Table->setPrimaryKey(array("id"));
         $Table->addUniqueIndex(array("email"));
     }
