@@ -35,4 +35,9 @@ $container->set('view', function ($container) {
     // *: Motor de Plantilla Twig ...
     return Twig::create(__DIR__ . '/../resources/Views', ['cache' => false]);
 });
+// *: Agregar servicio del validador a su contenedor ...
+$container->set('validator', function ($container) {
+    // *: Validacion de datos ...
+    return new \App\Validation\Validator();
+});
 require_once __DIR__ . "./controllers.php";

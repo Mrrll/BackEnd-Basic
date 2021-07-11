@@ -10,7 +10,8 @@
         "doctrine/orm": "2.6.6",
         "vlucas/phpdotenv": "^5.3",
         "doctrine/migrations": "^3.2",
-        "respect/validation": "^2.2"
+        "respect/validation": "^2.2",
+        "symfony/var-dumper": "^5.3"
     },
     "license": "MIT",
     "autoload": {
