@@ -2,7 +2,7 @@
 use DI\Container;
 use \Dotenv\Dotenv;
 // *: Carga las variables de entorno ...
-Dotenv::createImmutable(__DIR__ .'/../../')->load();
+Dotenv::createImmutable(__DIR__ .'/../../../')->load();
 return function (Container $container) {
     $container->set('settings', function () {
         return [
