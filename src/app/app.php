@@ -4,6 +4,7 @@
 use DI\Container;
 use Slim\Factory\AppFactory;
 use Slim\Views\TwigMiddleware;
+session_start();
 // *: Importamos el Autoload de las classes ...
 require_once __DIR__ . '/../../vendor/autoload.php';
 // *: Importamos los helpers personalizados ...
@@ -21,8 +22,9 @@ require_once __DIR__ . './config/container.php';
 $app->add(TwigMiddleware::create($app, $container->get('view')));
 // $app->add(TwigMiddleware::createFromContainer($app));
 // *: Middleware salida 404 ...
-$middleware = require_once __DIR__ . './Middleware/Middleware.php';
+$middleware = require_once __DIR__ . './Middleware/MiddlewareErrors.php';
 $middleware($app);
+$app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
 // *: Rutas ...
 $routes = require_once __DIR__ . '/../resources/Routes/web.php';
 $routes($app);

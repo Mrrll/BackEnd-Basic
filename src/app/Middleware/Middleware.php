@@ -1,12 +1,18 @@
 <?php
 namespace App\Middleware;
-use Slim\App;
-return function (App $app)
+class Middleware
 {
-    $settings = $app->getContainer()->get('settings');
-    $app->addErrorMiddleware(
-        $settings['displayErrorDetails'],
-        $settings['logErrorDetails'],
-        $settings['logErrors'],
-    ); //?: Convierte la salida de errores ...
-};
+    protected $container;
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }
+     // *: Metodo get del objeto container ...
+     public function __get($property)
+     {
+         // ?: Devuelve la propiedad del objeto container solicitada ...
+         if ($this->container->get($property)) {
+             return $this->container->get($property);
+         }
+     }
+}
