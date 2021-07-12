@@ -24,7 +24,9 @@ $app->add(TwigMiddleware::create($app, $container->get('view')));
 // *: Middleware salida 404 ...
 $middleware = require_once __DIR__ . './Middleware/MiddlewareErrors.php';
 $middleware($app);
+// *: Middleware de Validaciones ...
 $app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
+$app->add(new \App\Middleware\OldinputMiddleware($container));
 // *: Rutas ...
 $routes = require_once __DIR__ . '/../resources/Routes/web.php';
 $routes($app);

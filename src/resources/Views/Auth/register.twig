@@ -21,7 +21,7 @@
                 name="email"
                 id="email"
                 placeholder="you@you.com"
-                class="form-control {{ errors.email ? 'is-invalid' : '' }}" value="" />
+                class="form-control {{ errors.email ? 'is-invalid' : '' }}" value="{{ old.email }}" />
               <div class="invalid-feedback">
                 {{ errors.email|first }}
               </div>
