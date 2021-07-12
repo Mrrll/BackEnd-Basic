@@ -33,8 +33,8 @@ class RegisterController extends Controller
         $validation = $this->validator->validate($request, [
             'email' => v::noWhitespace()
                 ->notEmpty()
-                ->email(),
-                // ->emailAvailable(), // ?: Regla personalizada ...
+                ->email()
+                ->emailAvailable($this->container), // ?: Regla personalizada ...
             'name' => v::notEmpty()->alpha(),
             'password' => v::noWhitespace()->notEmpty(),
         ]); // ?: Le pasamos los datos al validador ...

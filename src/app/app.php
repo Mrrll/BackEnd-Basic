@@ -4,6 +4,7 @@
 use DI\Container;
 use Slim\Factory\AppFactory;
 use Slim\Views\TwigMiddleware;
+use Respect\Validation\Factory;
 session_start();
 // *: Importamos el Autoload de las classes ...
 require_once __DIR__ . '/../../vendor/autoload.php';
@@ -27,6 +28,12 @@ $middleware($app);
 // *: Middleware de Validaciones ...
 $app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
 $app->add(new \App\Middleware\OldinputMiddleware($container));
+// *: Fabrica de instancias de las validaciones personalizadas ...
+Factory::setDefaultInstance(
+    (new Factory())
+        ->withRuleNamespace('App\\Validation\\Rules')
+        ->withExceptionNamespace('App\\Validation\\Exceptions')
+); // ?: Ejecutar regla en la cadena ...
 // *: Rutas ...
 $routes = require_once __DIR__ . '/../resources/Routes/web.php';
 $routes($app);
