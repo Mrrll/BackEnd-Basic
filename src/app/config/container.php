@@ -6,6 +6,7 @@ use DI\Container;
 use Slim\Views\Twig;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use Slim\Psr7\Factory\ResponseFactory;
 // *: Agregar servicio de Doctrine a su contenedor ...
 $container->set(EntityManager::class, static function (
     Container $container
@@ -39,5 +40,11 @@ $container->set('view', function ($container) {
 $container->set('validator', function ($container) {
     // *: Validacion de datos ...
     return new \App\Validation\Validator();
+});
+// *: Agregar servicio del csrf a su contenedor ...
+$container->set('csrf', function ($container) {
+    // *: Validacion de datos ...
+    $responseFactory = new ResponseFactory();
+    return new \Slim\Csrf\Guard($responseFactory);
 });
 require_once __DIR__ . "./controllers.php";
