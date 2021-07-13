@@ -32,10 +32,7 @@
                 name="name"
                 id="name"
                 placeholder="you name"
-                class="form-control {{ errors.name ? 'is-invalid' : '' }}" value="" />
-              {# <div class="valid-tooltip">
-                            Looks good!
-                        </div> #}
+                class="form-control {{ errors.name ? 'is-invalid' : '' }}" value="{{ old.name }}" />
               <div class="invalid-feedback">
                 {{ errors.name|first }}
               </div>
@@ -56,7 +53,7 @@
                 class="btn btn-default mt-3 bg-dark text-white">
                 Register
               </button>
-              {# {{ csrf.field | raw }} #}
+              {{ csrf.field | raw }}
             </div>
           </form>
         </div>
