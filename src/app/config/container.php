@@ -1,6 +1,6 @@
 <?php
 // TODO: Archivo de Configuracion de los Servicios del contenedor Slim ...
-require_once __DIR__ . "/../../vendor/autoload.php";
+require_once __DIR__ . "/../../../vendor/autoload.php";
 // *: Importamos las classes necesarias ...
 use DI\Container;
 use Slim\Views\Twig;
@@ -33,6 +33,6 @@ $container->set('db', function ($container)
 // *: Agregar servicio de vista a su contenedor ...
 $container->set('view', function ($container) {
     // *: Motor de Plantilla Twig ...
-    return Twig::create(__DIR__ . '/../resources/Views', ['cache' => false]);
+    return Twig::create(__DIR__ . '/../../resources/Views', ['cache' => false]);
 });
 require_once __DIR__ . "./controllers.php";

@@ -17,12 +17,11 @@ class RegisterController extends Controller
     public function register(Request $request, Response $response)
     {
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
-        $usuario = new Usuarios();
-        $usuario->create([
-            "name" => $params['name'],
-            "email" => $params['email'],
-            "password" => $params['password'],
-        ]); // ?: Creacion de un nuevo usuario ...
+        $usuario = new Usuarios(
+            $params['name'],
+            $params['email'],
+            $params['password'],
+        ); // ?: Creacion de un nuevo usuario ...
         try {
             $this->db->persist($usuario);
             $this->db->flush();
