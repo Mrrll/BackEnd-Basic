@@ -14,6 +14,7 @@ class RegisterController extends Controller
 {
     public function index($request, $response)
     {
+        
         return $this->view->render($response, 'Auth/register.twig'); // ?: Renderizamos la plantilla desde el contenedor view ...
     }
     public function register(Request $request, Response $response)
