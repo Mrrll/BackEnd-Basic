@@ -6,6 +6,7 @@ use Slim\Factory\AppFactory;
 use Slim\Views\TwigMiddleware;
 // *: Importamos el Autoload de las classes ...
 require_once __DIR__ . '/../../vendor/autoload.php';
+session_start();
 //* Container de Slim DI ...
 $container = new Container();
 $settings = require_once __DIR__ . './config/settings.php';
