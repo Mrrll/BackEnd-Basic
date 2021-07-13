@@ -7,3 +7,6 @@ $container->set('IndexController', function ($container) {
 $container->set('RegisterController', function ($container) {
     return new \App\Controllers\Auth\RegisterController($container);
 });
+$container->set('LoginController', function ($container) {
+    return new \App\Controllers\Auth\LoginController($container);
+});
