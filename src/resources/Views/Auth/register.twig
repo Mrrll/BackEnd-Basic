@@ -10,7 +10,7 @@
           </h4>
         </div>
         <div class="card-body">
-          {{ errors | json_encode }}
+          {# {{ errors | json_encode }} #}
           <form action="{{ url_for('auth.register') }}"
             method="post"
             autocomplete="on"
@@ -53,7 +53,7 @@
                 class="btn btn-default mt-3 bg-dark text-white">
                 Register
               </button>
-              {# {{ csrf.field | raw }} #}
+              {{ csrf.field | raw }}
             </div>
           </form>
         </div>
