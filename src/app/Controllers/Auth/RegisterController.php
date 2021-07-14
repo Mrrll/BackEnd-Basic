@@ -42,10 +42,10 @@ class RegisterController extends Controller
             $this->db->persist($usuario);
             $this->db->flush(); // ?: Subir datos a la db ...
             $this->auth->attempt(
-                $usuario->email,
+                $usuario->getEmail(),
                 $params['password']
             ); // ?: Llamamos al metodo del clase auth y le pasamos el email y password ...
-
+            $this->flash->addMessage('info', 'You have been Register Up!');
         } catch (\Doctrine\DBAL\Exception $exception) {
             echo $exception->getMessage();
         }
