@@ -4,6 +4,9 @@
 $container->set('IndexController', function ($container) {
     return new \App\Controllers\IndexController($container);
 });
+$container->set('HomeController', function ($container) {
+    return new \App\Controllers\HomeController($container);
+});
 $container->set('RegisterController', function ($container) {
     return new \App\Controllers\Auth\RegisterController($container);
 });
