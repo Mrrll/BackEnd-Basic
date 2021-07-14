@@ -76,6 +76,10 @@ class Usuarios
     {
         return $this->password;
     }
+    public function setPassword(String $password) : void
+    {
+        $this->password = password_hash($password,PASSWORD_DEFAULT);
+    }
     public function setName(String $name) : void
     {
         $this->name = $name;
