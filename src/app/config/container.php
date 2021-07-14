@@ -35,6 +35,10 @@ $container->set('db', function ($container)
 $container->set('auth', function ($container) {
     return new \App\Controllers\Auth\Auth($container);
 });
+// *: Agregar servicio de mesanjes a su contenedor ...
+$container->set('flash', function ($container) {
+    return new \Slim\Flash\Messages;
+});
 // *: Agregar servicio de vista a su contenedor ...
 $container->set('view', function ($container) {
     // *: Motor de Plantilla Twig ...
@@ -42,7 +46,8 @@ $container->set('view', function ($container) {
     $view->getEnvironment()->addGlobal('auth', [
         'check' => $container->get('auth')->check(),
         'user' => $container->get('auth')->user(),
-    ]); // ?: Pasamos datos a la vista o el componente del container o creamos un objeto con las funciones del componente del container ...
+    ]); // ?: Pasamos datos a la vista o el componente del container o creamos un objeto con las funciones del componente auth del container ...
+    $view->getEnvironment()->addGlobal('flash', $container->get('flash')); // ?: Pasamos datos a la vista o el componente del container o creamos un objeto con las funciones del componente flash del container ...
     return $view;
 });
 // *: Agregar servicio del validador a su contenedor ...
@@ -56,5 +61,4 @@ $container->set('csrf', function ($container) {
     $responseFactory = new ResponseFactory();
     return new \Slim\Csrf\Guard($responseFactory);
 });
-
 require_once __DIR__ . "./controllers.php";

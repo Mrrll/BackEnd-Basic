@@ -6,6 +6,7 @@ class HomeController extends Controller
     // *: Muestra la peticion get del controlador ...
     public function index($request, $response)
     {
+        $this->flash->addMessage('info', 'Bienvenido');
         return $this->view->render($response, 'home.twig'); // ?: Renderizamos la plantilla desde el contenedor view ...
     }
 }
