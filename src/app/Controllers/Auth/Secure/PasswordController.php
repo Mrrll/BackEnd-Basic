@@ -19,5 +19,14 @@ class PasswordController extends Controller
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
         $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         // ! -------------------------------------------------------------------
+        $validation = $this->validator->validate($request, [
+            'password_old' => v::noWhitespace()
+                ->notEmpty()
+                ->matchesPassword($this->auth->user()->getPassword()), // ?: Regla personalizada ...
+            'password' => v::noWhitespace()->notEmpty(),
+        ]);
+        if ($validation->failed()) {
+            return $response->withHeader('Location',  $routes->urlFor('auth.password.change'));// ?: Redireccionamos a la plantilla ...
+        } //*: Comprobamos si los datos estan validados ...
     }
 }
