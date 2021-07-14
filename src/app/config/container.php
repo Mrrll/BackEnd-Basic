@@ -31,10 +31,19 @@ $container->set('db', function ($container)
 {
    return $container->get(EntityManager::class);
 });
+// *: Agregar servicio de la Autentificacion a su contenedor ...
+$container->set('auth', function ($container) {
+    return new \App\Controllers\Auth\Auth($container);
+});
 // *: Agregar servicio de vista a su contenedor ...
 $container->set('view', function ($container) {
     // *: Motor de Plantilla Twig ...
-    return Twig::create(__DIR__ . '/../../resources/Views', ['cache' => false]);
+    $view = Twig::create(__DIR__ . '/../../resources/Views', ['cache' => false]);
+    $view->getEnvironment()->addGlobal('auth', [
+        'check' => $container->get('auth')->check(),
+        'user' => $container->get('auth')->user(),
+    ]); // ?: Pasamos datos a la vista o el componente del container o creamos un objeto con las funciones del componente del container ...
+    return $view;
 });
 // *: Agregar servicio del validador a su contenedor ...
 $container->set('validator', function ($container) {
@@ -47,4 +56,5 @@ $container->set('csrf', function ($container) {
     $responseFactory = new ResponseFactory();
     return new \Slim\Csrf\Guard($responseFactory);
 });
+
 require_once __DIR__ . "./controllers.php";

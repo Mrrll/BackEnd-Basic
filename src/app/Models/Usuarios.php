@@ -60,23 +60,26 @@ class Usuarios
         $this->password = password_hash($password,PASSWORD_DEFAULT);
         $this->setDateTimeAt();
     }
-    public function setDateTimeAt()
+    public function getId() : int
     {
-        $this->updatedAt = new \DateTime('now');
-        $this->createdAt = new \DateTime('now');
+        return $this->id;
     }
     public function getName() : string
     {
         return $this->name;
     }
+    public function getPassword() : string
+    {
+        return $this->password;
+    }
     public function setName(String $name) : void
     {
         $this->name = $name;
     }
-    public function setDataTimeAt()
+    public function setDateTimeAt()
     {
-        $this->createdAt = new \DateTime('now');
         $this->updatedAt = new \DateTime('now');
+        $this->createdAt = new \DateTime('now');
     }
     public function setUpdateAt()
     {
