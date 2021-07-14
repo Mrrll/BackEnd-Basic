@@ -12,7 +12,9 @@ class Validator
     // *: Metodo de validacion de datos ...
     public function validate(Request $request, array $rules)
     {
+        // !: Esta parte habria que meterla en algun sito para poder acceder a ella ( Podria ir en Controller ) ...
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
+        // ! -------------------------------------------------------------------
         foreach ($rules as $field => $rule) {
             try {
                 $rule

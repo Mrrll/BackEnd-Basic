@@ -19,8 +19,10 @@ class RegisterController extends Controller
     }
     public function register(Request $request, Response $response)
     {
+        // !: Esta parte habria que meterla en algun sito para poder acceder a ella ( Podria ir en Controller ) ...
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
         $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
+        // ! -------------------------------------------------------------------
         $validation = $this->validator->validate($request, [
             'email' => v::noWhitespace()
                 ->notEmpty()

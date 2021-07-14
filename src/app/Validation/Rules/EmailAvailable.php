@@ -6,6 +6,7 @@ use App\Models\Usuarios;
 use Respect\Validation\Rules\AbstractRule;
 final class EmailAvailable extends AbstractRule
 {
+    // !: Esta parte ya esta metida en Controllers pero para poder acceder a ella ( Me visto obligado a duplicarla ) ...
     // *: Metodo get del objeto container ...
     public function __construct($container)
     {
@@ -19,6 +20,7 @@ final class EmailAvailable extends AbstractRule
             return $this->container->get($property);
         }
     }
+    // ! -------------------------------------------------------------------
     public function validate($input) : bool
     {
         // ?: Valida si el email ya esta registrado ...
