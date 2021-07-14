@@ -14,7 +14,7 @@ class RegisterController extends Controller
 {
     public function index($request, $response)
     {
-        
+
         return $this->view->render($response, 'Auth/register.twig'); // ?: Renderizamos la plantilla desde el contenedor view ...
     }
     public function register(Request $request, Response $response)
@@ -40,13 +40,16 @@ class RegisterController extends Controller
         ); // ?: Creacion de un nuevo usuario ...
         try {
             $this->db->persist($usuario);
-            $this->db->flush();
-            // ?: Subir datos a la db ...
+            $this->db->flush(); // ?: Subir datos a la db ...
+            $this->auth->attempt(
+                $usuario->email,
+                $params['password']
+            ); // ?: Llamamos al metodo del clase auth y le pasamos el email y password ...
+
         } catch (\Doctrine\DBAL\Exception $exception) {
             echo $exception->getMessage();
         }
         // *: Redireccionamiento ...
-        $response->getBody()->write('Usuario registrado con exito ...');
-        return $response;
+        return $response->withHeader('Location',  $routes->urlFor('home'));// ?: Redireccionamos a la plantilla ...
     }
 }
