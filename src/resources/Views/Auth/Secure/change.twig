@@ -1,0 +1,60 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+  <div class="row align-items-center">
+    <div class="col col-lg-4 offset-lg-4">
+      <div class="card">
+        <div class="card-header">
+          <h4>
+            Change Password
+          </h4>
+        </div>
+        <div class="card-body">
+          {# {{ errors | json_encode }} #}
+          <form action="{{ url_for('auth.password.change') }}"
+            method="post"
+            autocomplete="on"
+            novalidate>
+            <div class="form-group has-validation">
+              <label for="password_old" class="form-label">Current password :</label>
+              <input type="password"
+                name="password_old"
+                id="password_old"
+                placeholder="you password"
+                class="form-control {{
+                errors.password_old
+                  ? 'is-invalid'
+                  : ''
+                }}" />
+              <div class="invalid-feedback">
+                {{ errors.password_old|first }}
+              </div>
+            </div>
+            <div class="form-group has-validation">
+              <label for="password" class="form-label">Password :</label>
+              <input type="password"
+                name="password"
+                id="password"
+                placeholder="your new  password"
+                class="form-control {{
+                errors.password
+                  ? 'is-invalid'
+                  : ''
+                }}" />
+              <div class="invalid-feedback">
+                {{ errors.password|first }}
+              </div>
+            </div>
+            <div class="form-action">
+              <button type="submit"
+                class="btn btn-default mt-3 bg-dark text-white">
+                Change
+              </button>
+              {{ csrf.field | raw }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

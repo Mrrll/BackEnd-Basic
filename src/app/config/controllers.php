@@ -13,3 +13,6 @@ $container->set('RegisterController', function ($container) {
 $container->set('LoginController', function ($container) {
     return new \App\Controllers\Auth\LoginController($container);
 });
+$container->set('PasswordController', function ($container) {
+    return new \App\Controllers\Auth\Secure\PasswordController($container);
+});
