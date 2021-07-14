@@ -19,7 +19,7 @@ class LoginController extends Controller
     public function login(Request $request, Response $response)
     {
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
-         $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
+        $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         $auth = $this->auth->attempt(
             $params['email'],
             $params['password']
@@ -29,5 +29,11 @@ class LoginController extends Controller
         }
         // *: Redireccionamiento ...
         return $response->withHeader('Location',  $routes->urlFor('home'));// ?: Redireccionamos a la plantilla ...
+    }
+    public function logout(Request $request, Response $response)
+    {
+        $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
+        $this->auth->logout();
+        return $response->withHeader('Location',  $routes->urlFor('welcom'));// ?: Redireccionamos a la plantilla ...
     }
 }

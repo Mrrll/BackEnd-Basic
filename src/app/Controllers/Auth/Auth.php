@@ -29,4 +29,8 @@ class Auth extends Controller
         } // ?: Verificar contraseña para ese usuario ...
         return false;
     } // ?: Metodo que se encarga de verificar passwords ...
+    public function logout()
+    {
+        unset($_SESSION['user']);
+    }
 }
