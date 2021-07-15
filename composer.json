@@ -13,7 +13,8 @@
         "symfony/var-dumper": "^5.3",
         "respect/validation": "^2.2",
         "slim/csrf": "^1.2",
-        "slim/flash": "^0.4.0"
+        "slim/flash": "^0.4.0",
+        "semhoun/slim-mailer": "^1.0"
     },
     "license": "MIT",
     "autoload": {
