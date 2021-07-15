@@ -27,6 +27,13 @@ return function (Container $container) {
                     'driver' => $_ENV[ 'DATABASE_DRIVER' ],
                 ],
             ],
+            'mailer' => [
+                'host'      => $_ENV[ 'SMTP_HOST' ],  // SMTP Host
+                'port'      => $_ENV[ 'SMTP_PORT' ],  // SMTP Port
+                'username'  => $_ENV[ 'SMTP_USER' ],  // SMTP Username
+                'password'  => $_ENV[ 'SMTP_PASSWD' ],  // SMTP Password
+                'protocol'  => $_ENV[ 'SMTP_PROTOCOL' ]   // SSL or TLS
+            ]
         ];
     });
 };
