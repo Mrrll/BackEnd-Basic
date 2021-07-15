@@ -61,4 +61,15 @@ $container->set('csrf', function ($container) {
     $responseFactory = new ResponseFactory();
     return new \Slim\Csrf\Guard($responseFactory);
 });
+// *: Agregar servicio del mailer a su contenedor ...
+$container->set('mailer', function ($container) {
+            $settings = $container->get('settings');
+            $view = $container->get('view');
+			$mailer = new \Semhoun\Mailer\Mailer($view, $settings['mailer']);
+
+    		// Set the details of the default sender
+    		$mailer->setDefaultFrom('no-reply@mail.com', 'Webmaster');
+
+    		return $mailer;
+});
 require_once __DIR__ . "./controllers.php";
