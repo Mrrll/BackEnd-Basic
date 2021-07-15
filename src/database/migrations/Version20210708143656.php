@@ -19,12 +19,12 @@ final class Version20210708143656 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $Table = $schema->createTable("usuarios");
-        $Table->addColumn("id", "integer", array("unsigned" => true));
+        $Table->addColumn("id", "integer", array("unsigned" => true, "autoincrement" => true));
         $Table->addColumn("name", "string", array("length" => 255));
         $Table->addColumn("email", "string", array("length" => 255));
         $Table->addColumn("password", "string", array("length" => 255));
-        $Table->addColumn("updated_at", "datetime", array("notnull " => false));
-        $Table->addColumn("created_at", "datetime", array("notnull " => false));
+        $Table->addColumn("updated_at", "datetime", array("notnull" => false));
+        $Table->addColumn("created_at", "datetime", array("notnull" => false));
         $Table->setPrimaryKey(array("id"));
         $Table->addUniqueIndex(array("email"));
     }
