@@ -1,6 +1,5 @@
 <?php
 // TODO: Archivo de Configuracion de los Servicios del contenedor Slim ...
-require_once __DIR__ . "/../../../vendor/autoload.php";
 // *: Importamos las classes necesarias ...
 use DI\Container;
 use Slim\Views\Twig;
