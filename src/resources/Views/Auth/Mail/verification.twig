@@ -6,7 +6,7 @@
         Send validation email  Verification !!!
     </p>
     <button class="btn btn-warning">
-        <a href="#">Send validation</a>
+        <a href="{{ url_for('auth.verification.send') }}">Send validation</a>
     </button>
 </div>
 {% endblock %}

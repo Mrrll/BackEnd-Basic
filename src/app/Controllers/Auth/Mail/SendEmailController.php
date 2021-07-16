@@ -15,5 +15,17 @@ class SendEmailController extends Controller
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
         $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         // ! -------------------------------------------------------------------
+        $user = $this->auth->user(); // ?: Obtenemos el usuario ...
+        // *: Envio de Email ...
+        $this->mailer->sendMessage(
+            '/Auth/Mail/Templates/EmailVerification.twig',
+            ['user' => $user], // ?: Aqui añadimos el usuario a la vista ...
+            function ($message) use ($user) {
+                $message->setTo($user->getEmail(), $user->getName());
+                $message->setSubject('Welcome to the Team!');
+            }
+        );
+        $response->getBody()->write('Mail sent!');
+        return $response;
     }
 }
