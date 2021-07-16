@@ -34,6 +34,7 @@ return function (App $app) {
             $app->post('/change', 'PasswordController:ChangePassword');
             // *: Ruta de la Verificacion de Email ...
             $app->get('/verification', 'VerificationEmailController:index')->setName('auth.verification');
+            $app->get('/verification/auth', 'VerificationEmailController:VerificationEmail')->setName('auth.verification.check');
             // *: Ruta del Envio de Email ...
             $app->get('/verification/auth/send', 'SendEmailController:SendEmail')->setName('auth.verification.send');
         })
