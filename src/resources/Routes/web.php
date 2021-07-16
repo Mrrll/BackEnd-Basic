@@ -4,9 +4,9 @@
 use Slim\App;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use App\Middleware\AuthMiddleware;
-use App\Middleware\GuestMiddleware;
-use App\Middleware\VerificationEmailMiddleware;
+use App\Middleware\Routes\AuthMiddleware;
+use App\Middleware\Routes\GuestMiddleware;
+use App\Middleware\Routes\VerificationEmailMiddleware;
 // *: Creamos rutas ...
 return function (App $app) {
     // *: Rutas web ...

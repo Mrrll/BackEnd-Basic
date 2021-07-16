@@ -42,3 +42,4 @@ $routesApp = require_once __DIR__ . './Routes/app.php';
 $routesApp($app);
 $routesWeb = require_once __DIR__ . '/../resources/Routes/web.php';
 $routesWeb($app);
+// $app->addRoutingMiddleware();
