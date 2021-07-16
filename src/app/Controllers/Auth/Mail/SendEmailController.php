@@ -25,7 +25,7 @@ class SendEmailController extends Controller
                 $message->setSubject('Welcome to the Team!');
             }
         );
-        $response->getBody()->write('Mail sent!');
-        return $response;
+        $this->flash->addMessage('info', 'Successful shipment, check your email to verify your credentials.');
+        return $response->withHeader('Location',  $routes->urlFor('auth.verification'));// ?: Redireccionamos a la plantilla ...
     }
 }
