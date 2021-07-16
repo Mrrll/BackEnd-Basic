@@ -52,35 +52,40 @@ class Usuarios
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="email_verified_at", type="datetime", nullable=true)
+     */
+    private $emailVerifiedAt;
 
-    public function __construct(String $name, String $email, String $password)
+    public function __construct(string $name, string $email, string $password)
     {
         $this->name = $name;
         $this->email = $email;
-        $this->password = password_hash($password,PASSWORD_DEFAULT);
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
         $this->setDateTimeAt();
     }
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getEmail() : string
+    public function getEmail(): string
     {
         return $this->email;
     }
-    public function getPassword() : string
+    public function getPassword(): string
     {
         return $this->password;
     }
-    public function setPassword(String $password) : void
+    public function setPassword(string $password): void
     {
-        $this->password = password_hash($password,PASSWORD_DEFAULT);
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
-    public function setName(String $name) : void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -92,5 +97,12 @@ class Usuarios
     public function setUpdateAt()
     {
         $this->updatedAt = new \DateTime('now');
+    }
+    public function getEmailVerifiedAt(): string
+    {
+        if ($this->emailVerifiedAt != null) {
+            return $this->emailVerifiedAt->format('d-m-Y H:i:s');
+        }
+        return false;
     }
 }
