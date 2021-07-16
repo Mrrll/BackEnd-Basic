@@ -10,31 +10,5 @@ use App\Middleware\GuestMiddleware;
 return function (App $app) {
     // *: Rutas web ...
     $app->get('/', 'IndexController:index')->setName('welcom');
-
-    $app->group('guest', function () use ($app) {
-        // *: Ruta del registro ...
-        $app
-            ->get('/register', 'RegisterController:index')
-            ->setName('auth.register');
-        $app->post('/register', 'RegisterController:register');
-        // *: Ruta del login ...
-        $app->get('/login', 'LoginController:index')->setName('auth.login');
-        $app->post('/login', 'LoginController:login');
-    })->add(new GuestMiddleware($app->getContainer()));
-    // *: Rutas Auth ...
-    $app
-        ->group('auth', function () use ($app) {
-            // *: Ruta web del usuario ...
-            $app->get('/home', 'HomeController:index')->setName('home');
-            // *: Ruta del logout ...
-            $app
-                ->get('/logout', 'LoginController:logout')
-                ->setName('auth.logout');
-            // *: Ruta del Cambio password ...
-            $app
-                ->get('/change', 'PasswordController:index')
-                ->setName('auth.password.change');
-            $app->post('/change', 'PasswordController:ChangePassword');
-        })
-        ->add(new AuthMiddleware($app->getContainer()));
+    $app->get('/home', 'HomeController:index')->setName('home')->add(new AuthMiddleware($app->getContainer()));
 }; // ?: funcion de retorno y solicitud de la App ...
