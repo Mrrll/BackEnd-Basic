@@ -31,7 +31,7 @@ return function (App $app) {
             ->setName('auth.password.change');
             $app->post('/change', 'PasswordController:ChangePassword');
             // *: Ruta del Cambio password ...
-            $app->get('/Verification', 'VerificationEmailController:index')->setName('auth.verification');
+            $app->get('/verification', 'VerificationEmailController:index')->setName('auth.verification');
         })
         ->add(new AuthMiddleware($app->getContainer()));
 }; // ?: funcion de retorno y solicitud de la App ...

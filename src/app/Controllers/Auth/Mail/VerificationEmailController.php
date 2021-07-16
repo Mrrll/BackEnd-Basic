@@ -11,7 +11,7 @@ class VerificationEmailController extends Controller
 {
     public function index(Request $request, Response $response)
     {
-       return $this->view->render($response, 'Auth/Secure/change.twig'); // ?: Renderizamos la plantilla desde el contenedor view ...
+       return $this->view->render($response, 'Auth/Mail/Verification.twig'); // ?: Renderizamos la plantilla desde el contenedor view ...
     }
     public function VerificationEmail(Request $request, Response $response)
     {
