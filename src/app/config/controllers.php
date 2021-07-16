@@ -19,3 +19,6 @@ $container->set('PasswordController', function ($container) {
 $container->set('VerificationEmailController', function ($container) {
     return new \App\Controllers\Auth\Mail\VerificationEmailController($container);
 });
+$container->set('SendEmailController', function ($container) {
+    return new \App\Controllers\Auth\Mail\SendEmailController($container);
+});
