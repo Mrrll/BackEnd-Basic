@@ -33,4 +33,16 @@ class Auth extends Controller
     {
         unset($_SESSION['user']);
     }
+    public function verification()
+    {
+        // *: Funcion de la Verificacion del Email ...
+        if (isset($_SESSION['user'])) {
+            $rep = $this->db->getRepository(Usuarios::class); // ?: Instanciamos la Clase ...
+            $usu = $rep->findBy(array('email' => $this->auth->user()->getEmail())); // ?: Buscamos el usuario con inicio de sesion ...
+            if($usu[0]->getEmailVerifiedAt()){
+                return true;
+            } // ? Si es verdadero devolvemos true ...
+        } // ?: Buscamos el usurio ....
+        return false;
+    }
 }
