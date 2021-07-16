@@ -19,5 +19,7 @@ class VerificationEmailController extends Controller
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
         $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         // ! -------------------------------------------------------------------
+        $response->getBody()->write('Working');
+        return $response;
     }
 }
