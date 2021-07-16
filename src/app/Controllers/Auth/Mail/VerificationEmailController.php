@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers\Auth\Secure;
+namespace App\Controllers\Auth\Mail;
 // TODO: Archivo controlador de la password ...
 // *: Importamos las classes necesarias ...
 use App\Controllers\Controller;
