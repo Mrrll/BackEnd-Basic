@@ -27,9 +27,11 @@ return function (App $app) {
                 ->setName('auth.logout');
             // *: Ruta del Cambio password ...
             $app
-                ->get('/change', 'PasswordController:index')
-                ->setName('auth.password.change');
+            ->get('/change', 'PasswordController:index')
+            ->setName('auth.password.change');
             $app->post('/change', 'PasswordController:ChangePassword');
+            // *: Ruta del Cambio password ...
+            $app->get('/Verification', 'VerificationEmailController:index')->setName('auth.verification');
         })
         ->add(new AuthMiddleware($app->getContainer()));
 }; // ?: funcion de retorno y solicitud de la App ...
