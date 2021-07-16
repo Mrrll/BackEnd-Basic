@@ -1,0 +1,16 @@
+{% extends 'Templates/app.twig' %}
+
+{% block content %}
+  Hola mundo Email !!!<h1>
+    Hello {{ user.name }}
+  </h1>
+
+  <p>
+    Welcome to the Team!
+  </p>
+
+  <p>
+    Love, Admin
+  </p>
+  <a href="{{ url_for('auth.verification') }}">Link</a>
+{% endblock %}
