@@ -98,6 +98,10 @@ class Usuarios
     {
         $this->updatedAt = new \DateTime('now');
     }
+    public function setEmailVerifiedAt()
+    {
+        $this->emailVerifiedAt = new \DateTime('now');
+    }
     public function getEmailVerifiedAt(): string
     {
         if ($this->emailVerifiedAt != null) {
