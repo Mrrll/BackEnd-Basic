@@ -14,7 +14,8 @@
         "respect/validation": "^2.2",
         "slim/csrf": "^1.2",
         "slim/flash": "^0.4.0",
-        "semhoun/slim-mailer": "^1.0"
+        "semhoun/slim-mailer": "^1.0",
+        "bryanjhv/slim-session": "^4.1"
     },
     "license": "MIT",
     "autoload": {
