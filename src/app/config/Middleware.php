@@ -7,6 +7,7 @@ use Slim\Views\TwigMiddleware;
 return function (App $app) {
     $container = $app->getContainer();
     $settings = $container->get('settings');
+    $app->addRoutingMiddleware();
     $app->addErrorMiddleware(
         $settings['displayErrorDetails'],
         $settings['logErrorDetails'],
@@ -22,5 +23,8 @@ return function (App $app) {
     $app->add(new \App\Middleware\CsrfViewMiddleware($container)); // ?: Controlamos el token de los formularios ...
     // *: Añadir CSRF Middleware ...
     $app->add($container->get('csrf'));
-    // $app->addRoutingMiddleware();
+    // *: Middleware de Csrf ...
+    $app->add(new \App\Middleware\SessionMiddleware($container)); // ?: Controlamos el token de los formularios ...
+    // *: Añadir CSRF Middleware ...
+    $app->add($container->get('session'));
 };

@@ -72,4 +72,9 @@ $container->set('mailer', function ($container) {
 
     		return $mailer;
 });
+// *: Agregar servicio de sesiones a su contenedor ...
+$container->set('session', function ($container)
+{
+    return new \App\Middleware\SessionMiddleware($container);
+});
 require_once __DIR__ . "./controllers.php";

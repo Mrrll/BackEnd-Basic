@@ -5,7 +5,6 @@ namespace App\Controllers\Auth\Mail;
 use App\Controllers\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Respect\Validation\Validator as v;
 use Slim\Routing\RouteContext;
 class VerificationEmailController extends Controller
 {
@@ -16,11 +15,10 @@ class VerificationEmailController extends Controller
     public function VerificationEmail(Request $request, Response $response)
     {
         // !: Esta parte habria que meterla en algun sito para poder acceder a ella ( Podria ir en Controller ) ...
-        $params = (array) $request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
         $routes = RouteContext::fromRequest($request)->getRouteParser(); // ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         // ! -------------------------------------------------------------------
         if (
-            isset($_SESSION['verification']) &&
+            !isset($_SESSION['verification']) ||
             !$this->csrf->validateToken(
                 $_SESSION['verification'],
                 $_GET['csrf_value']
@@ -34,14 +32,6 @@ class VerificationEmailController extends Controller
                 'Location',
                 $routes->urlFor('auth.verification')
             ); // ?: Redireccionamos a la plantilla ...
-        }
-        if ( !isset($_SESSION['verification'])){
-            $this->flash->addMessage(
-                'error',
-                'The token is not valid or expired!'
-            );
-            // *: Redireccionamiento ...
-            return $response->withHeader('Location', $routes->urlFor('home')); // ?: Redireccionamos a la plantilla ...
         }
         $usuario = $this->auth->user(); // ?: Obtenemos el usuario con inicio de sesion ...
         // *: Actualizamos la fecha y la verificacion del email ...
