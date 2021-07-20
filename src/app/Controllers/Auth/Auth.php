@@ -24,14 +24,19 @@ class Auth extends Controller
             return false;
         } // ?: Si el usuario no se encuentra devolvemos false ...
         if(password_verify($password, $user[0]->getPassword())){
-            $_SESSION['user'] = $user[0]->getId(); // ?: Crear session de usuario ...
+            $this->session->create([
+                'name' => 'user',
+                'value' => $user[0]->getId(),
+                'lifetime' => '1 minutes'
+            ]);// ?: Crear session de usuario ...
             return true;
-        } // ?: Verificar contraseña para ese usuario ...
+        }  // ?: Verificar contraseña para ese usuario ...
         return false;
     } // ?: Metodo que se encarga de verificar passwords ...
     public function logout()
     {
-        unset($_SESSION['user']);
+        session_unset();
+        session_destroy();
     }
     public function verification()
     {

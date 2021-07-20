@@ -19,8 +19,7 @@ class SendEmailController extends Controller
             $sesionVerification = $this->session->create([
                 'name' => 'verification',
                 'value' => $this->csrf->getTokenName(),
-                'lifetime' => '1 minutes',
-                // 'autorefresh' => true
+                'lifetime' => '5 minutes'
             ]);
             // *: Envio de Email ...
             $this->mailer->sendMessage(
@@ -28,7 +27,7 @@ class SendEmailController extends Controller
                 [
                     'user' => $user,
                     'token' => $this->csrf->getTokenValue(),
-                ], // ?: Aqui añadimos el usuario a la vista ...
+                ], // ?: Aqui añadimos datos a la vista ...
                 function ($message) use ($user) {
                     $message->setTo($user->getEmail(), $user->getName());
                     $message->setSubject('Welcome to the Team!');
