@@ -24,6 +24,9 @@ return function (App $app) {
             $app
                 ->get('/logout', 'LoginController:logout')
                 ->setName('auth.logout');
+            // *: Ruta del forgot ...
+            $app->get('/password/forgot', 'ForgotPasswordController:index')->setName('auth.password.forgot');
+            $app->post('/password/forgot', 'ForgotPasswordController:SendChangePassword');
         })
         ->add(new GuestMiddleware($app->getContainer()));
     // *: Rutas Auth ...
@@ -50,7 +53,7 @@ return function (App $app) {
             ->setName('auth.verification.check');
         // *: Ruta del Envio de Email ...
         $app
-            ->get('/verification/auth/send', 'SendEmailController:SendEmail')
+            ->get('/verification/auth/send', 'SendEmailController:SendVerificationEmail')
             ->setName('auth.verification.send');
     })->add(new AuthMiddleware($app->getContainer()))
     ->add(new EmailVerificateMiddleware($app->getContainer()));

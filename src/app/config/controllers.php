@@ -22,3 +22,6 @@ $container->set('VerificationEmailController', function ($container) {
 $container->set('SendEmailController', function ($container) {
     return new \App\Controllers\Auth\Mail\SendEmailController($container);
 });
+$container->set('ForgotPasswordController', function ($container) {
+    return new \App\Controllers\Auth\Secure\ForgotPasswordController($container);
+});

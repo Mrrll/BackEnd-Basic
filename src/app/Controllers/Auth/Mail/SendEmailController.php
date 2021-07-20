@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Routing\RouteContext;
 class SendEmailController extends Controller
 {
-    public function SendEmail(Request $request, Response $response)
+    public function SendVerificationEmail(Request $request, Response $response)
     {
         // !: Esta parte habria que meterla en algun sito para poder acceder a ella ( Podria ir en Controller ) ...
         $routes = RouteContext::fromRequest($request)->getRouteParser(); // ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
