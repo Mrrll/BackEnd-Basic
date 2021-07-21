@@ -6,6 +6,8 @@ use App\Controllers\Controller;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Routing\RouteContext;
+use Respect\Validation\Validator as v;
+use App\Models\Usuarios;
 class SendEmailController extends Controller
 {
     public function SendVerificationEmail(Request $request, Response $response)
@@ -19,8 +21,9 @@ class SendEmailController extends Controller
             $sesionVerification = $this->session->create([
                 'name' => 'verification',
                 'value' => $this->csrf->getTokenName(),
-                'lifetime' => '5 minutes'
+                'lifetime' => '5 minutes',
             ]);
+            // !: Esta parte habria que meterla en algun sito para poder acceder a ella ( Podria ir en Mail ) ...
             // *: Envio de Email ...
             $this->mailer->sendMessage(
                 '/Auth/Mail/Templates/EmailVerification.twig',
@@ -33,6 +36,7 @@ class SendEmailController extends Controller
                     $message->setSubject('Welcome to the Team!');
                 }
             );
+            // ! -------------------------------------------------------------------
             $this->flash->addMessage(
                 'info',
                 'Successful shipment, check your email to verify your credentials, The link will expire in ' .
@@ -45,5 +49,72 @@ class SendEmailController extends Controller
             ); // ?: Redireccionamos a la plantilla ...
         }
         return $response;
+    }
+    public function SendChangePassword(Request $request, Response $response)
+    {
+        // !: Esta parte habria que meterla en algun sito para poder acceder a ella ( Podria ir en Controller ) ...
+        $params = (array) $request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
+        $routes = RouteContext::fromRequest($request)->getRouteParser(); // ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
+        // ! -------------------------------------------------------------------
+        $validation = $this->validator->validate($request, [
+            'email' => v::noWhitespace()
+                ->notEmpty()
+                ->email()
+                ->EmailCheck($this->container), // ?: Regla personalizada ...
+        ]);
+        if ($validation->failed()) {
+            $this->flash->addMessage(
+                'error',
+                'The email does not match, check your data.'
+            );
+            return $response->withHeader(
+                'Location',
+                $routes->urlFor('auth.password.forgot')
+            ); // ?: Redireccionamos a la plantilla ...
+        } //*: Comprobamos si los datos estan validados ...
+
+        if (isset($_SESSION['ValidationEmail'])) {
+            $this->flash->addMessage(
+                'warning',
+                'You have an open recovery session.'
+            );
+            return $response->withHeader(
+                'Location',
+                $routes->urlFor('auth.password.forgot')
+            ); // ?: Redireccionamos a la plantilla ...
+        }
+        $sesionValidationEmail = $this->session->create([
+            'name' => 'ValidationEmail',
+            'value' => [
+                'token' => $this->csrf->getTokenName(),
+                'email' => $params['email'],
+            ],
+            'lifetime' => '5 minutes',
+        ]);
+        $rep = $this->db->getRepository(Usuarios::class); // ?: Instanciamos la Clase ...
+        $user = $rep->findBy(['email' => $params['email']]);
+        // *: Envio de Email ...
+        $this->mailer->sendMessage(
+            '/Auth/Mail/Templates/EmailForgot.twig',
+            [
+                'user' => $user,
+                'token' => $this->csrf->getTokenValue(),
+            ], // ?: Aqui añadimos datos a la vista ...
+            function ($message) use ($user) {
+                $message->setTo($user[0]->getEmail(), $user[0]->getName());
+                $message->setSubject('Forgot Password');
+            }
+        );
+        $this->flash->addMessage(
+            'info',
+            'Successful shipment, check your email to verify your credentials, The link will expire in ' .
+                $sesionValidationEmail['time'] .
+                '.'
+        );
+        // *: Redireccionamiento ...
+        return $response->withHeader(
+            'Location',
+            $routes->urlFor('auth.password.forgot')
+        ); // ?: Redireccionamos a la plantilla ...
     }
 }

@@ -8,3 +8,8 @@
     {{ flash.getMessage('error') | first }}
 </div>
 {% endif %}
+{% if flash.getMessage('warning') %}
+<div class="alert alert-warning">
+    {{ flash.getMessage('warning') | first }}
+</div>
+{% endif %}

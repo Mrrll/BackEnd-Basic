@@ -26,7 +26,10 @@ return function (App $app) {
                 ->setName('auth.logout');
             // *: Ruta del forgot ...
             $app->get('/password/forgot', 'ForgotPasswordController:index')->setName('auth.password.forgot');
-            $app->post('/password/forgot', 'ForgotPasswordController:SendChangePassword');
+            $app->post('/password/forgot', 'SendEmailController:SendChangePassword');
+            $app->get('/verification/password/forgot', 'ForgotPasswordController:VerificateForgot')->setName('auth.password.forgot.verification');
+            $app->get('/password/forgot/change', 'ForgotPasswordController:RenderChange')->setName('auth.password.forgot.change');
+            $app->post('/password/forgot/change', 'ForgotPasswordController:ChangePassword');
         })
         ->add(new GuestMiddleware($app->getContainer()));
     // *: Rutas Auth ...

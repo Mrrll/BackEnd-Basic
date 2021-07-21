@@ -1,0 +1,27 @@
+{% block content %}
+  Hola mundo Email !!!<h1>
+    Hello {{ user.name }}
+  </h1>
+  {{ token|json_encode }}
+  <p>
+    Welcome to the Team!
+  </p>
+
+  <p>
+    Love, Admin
+  </p>
+  <form action="{{ base_url }}{{ url_for('auth.verification.check') }}"
+    method="get">
+    <div class="form-action">
+      <button type="submit" class="btn btn-default mt-3 bg-dark text-white">
+        Login
+      </button>
+      {{ csrf.field|raw }}
+    </div>
+  </form>
+  <a href="{{ base_url }}{{ url_for('auth.password.forgot.verification') }}?csrf_value={{
+    token
+    }}">
+    Link
+  </a>
+{% endblock %}
