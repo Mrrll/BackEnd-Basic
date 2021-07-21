@@ -24,7 +24,8 @@ class LoginController extends Controller
         // ! -------------------------------------------------------------------
         $auth = $this->auth->attempt(
             $params['email'],
-            $params['password']
+            $params['password'],
+            (isset($params['remember_me'])) ? $params['remember_me'] : null
         ); // ?: Llamamos al metodo del clase auth y le pasamos el email y password ...
         if(!$auth){
             $this->flash->addMessage('error', 'Could no sign you in with those details.');
