@@ -77,4 +77,8 @@ $container->set('session', function ($container)
 {
     return new \App\Middleware\SessionMiddleware($container);
 });
+$container->set('cookies', function ($container)
+{
+    return new \App\Services\Cookie($container);
+});
 require_once __DIR__ . "./controllers.php";
