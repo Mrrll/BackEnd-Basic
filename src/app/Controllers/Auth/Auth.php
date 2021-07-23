@@ -33,11 +33,21 @@ class Auth extends Controller
                 'value' => $user[0]->getId(),
             ]); // ?: Crear session de usuario ...
             if ($remember) {
-                $this->cookies->create([
+                $cookie = $this->cookies->create([
                     'name' => 'remember_user_session',
                     'value' => $email,
-                    'expires' => '1 minutes',
                 ]);
+                $rep = $this->db->getRepository(Usuarios::class); // ?: Instanciamos la Clase ...
+                $usuario = $rep->findBy(['email' => $email])[0];
+                $usuario->setRemember($cookie['value']); // ?: Añadimos la nueva password ...
+                try {
+                    $this->db->persist($usuario);
+                    $this->db->flush(); // ?: Subir datos a la db ...
+                } catch (\Doctrine\DBAL\Exception $exception) {
+                    // !: Esto hay que cambiarlo por un mensaje ...
+                    echo $exception->getMessage();
+                    // !: ------------------------------------------
+                }
             }
             return true;
         } // ?: Verificar contraseña para ese usuario ...
@@ -65,13 +75,19 @@ class Auth extends Controller
     }
     public function attemptRemember()
     {
+        // dd($_COOKIE['remember_user_session']);
         $user = $this->db
             ->getRepository(Usuarios::class)
-            ->findBy(['rememmber_me' => $_COOKIE['remember_user_session']]); // ?: Buscamo el usuario por correo electrónico ...
+            ->findBy(['remember_me' => $_COOKIE['remember_user_session']]); // ?: Buscamo el usuario por correo electrónico ...
         if (!$user) {
             return false;
         } // ?: Si el usuario no se encuentra devolvemos false ...
-        if (password_verify($user[0]->getEmail(), $_COOKIE['remember_user_session'])) {
+        if (
+            password_verify(
+                $user[0]->getEmail(),
+                $_COOKIE['remember_user_session']
+            )
+        ) {
             $this->session->create([
                 'name' => 'user',
                 'value' => $user[0]->getId(),

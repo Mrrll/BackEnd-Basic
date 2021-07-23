@@ -13,7 +13,7 @@ class Cookie extends Controller
         $defaults = [
             'name' => 'cookie_session',
             'value' => '',
-            'expires' => '20 minutes',
+            'expires' => '1 year',
             'path' => '/',
             'domain' => 'localhost',
             'secure' => true,
@@ -24,11 +24,15 @@ class Cookie extends Controller
         if (is_string($lifetime = $setting['expires'])) {
             $setting['expires'] = time() + (strtotime($lifetime) - time());
         }
+        // *: Encriptamos valor ...
+        if (is_string($valCrypt = $setting['value'])) {
+            $setting['value'] = password_hash($valCrypt, PASSWORD_BCRYPT);
+        }
         // *: Creamos la sesion ...
         if (!isset($_COOKIE[$setting['name']])) {
             setcookie(
                 $setting['name'],
-                password_hash($setting['value'], PASSWORD_BCRYPT),
+                 $setting['value'],
                 $setting['expires'],
                 $setting['path'],
                 $setting['domain'],

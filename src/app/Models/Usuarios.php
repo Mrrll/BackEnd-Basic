@@ -57,7 +57,12 @@ class Usuarios
      * @ORM\Column(name="email_verified_at", type="datetime", nullable=true)
      */
     private $emailVerifiedAt;
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remember_me", type="string", length=255, nullable=true)
+     */
+    private $remember_me;
     public function __construct(string $name, string $email, string $password)
     {
         $this->name = $name;
@@ -108,5 +113,13 @@ class Usuarios
             return $this->emailVerifiedAt->format('d-m-Y H:i:s');
         }
         return false;
+    }
+    public function getRemember() : string
+    {
+        return $this->remember_me;
+    }
+    public function setRemember(string $remeber) : void
+    {
+       $this->remember_me = $remeber;
     }
 }
