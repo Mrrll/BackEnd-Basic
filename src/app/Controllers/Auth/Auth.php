@@ -45,6 +45,9 @@ class Auth extends Controller
     } // ?: Metodo que se encarga de verificar passwords ...
     public function logout()
     {
+        if (isset($_COOKIE['remember_user_session'])) {
+            $this->cookies->DeleteCookie('remember_user_session');
+        }
         session_unset();
         session_destroy();
     }
@@ -60,4 +63,21 @@ class Auth extends Controller
         } // ?: Buscamos el usurio ....
         return false;
     }
+    public function attemptRemember()
+    {
+        $user = $this->db
+            ->getRepository(Usuarios::class)
+            ->findBy(['rememmber_me' => $_COOKIE['remember_user_session']]); // ?: Buscamo el usuario por correo electrónico ...
+        if (!$user) {
+            return false;
+        } // ?: Si el usuario no se encuentra devolvemos false ...
+        if (password_verify($user[0]->getEmail(), $_COOKIE['remember_user_session'])) {
+            $this->session->create([
+                'name' => 'user',
+                'value' => $user[0]->getId(),
+            ]); // ?: Crear session de usuario ...
+            return true;
+        } // ?: Verificar contraseña para ese usuario ...
+        return false;
+    } // ?: Metodo que se encarga de verificar passwords ...
 }
