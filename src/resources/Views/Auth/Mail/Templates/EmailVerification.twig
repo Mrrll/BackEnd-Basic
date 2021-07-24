@@ -1,27 +1,19 @@
 {% block content %}
-  Hola mundo Email !!!<h1>
-    Hello {{ user.name }}
+  <h1>
+    Welcome to {{ app_name }} !!!
   </h1>
-  {{ token|json_encode }}
+  <h2>
+    Hello {{ user.name }}
+  </h2>
   <p>
-    Welcome to the Team!
+    In order to access you must verify your email!
   </p>
-
   <p>
-    Love, Admin
+    Click on the link to verify your account
   </p>
-  <form action="{{ base_url }}{{ url_for('auth.verification.check') }}"
-    method="get">
-    <div class="form-action">
-      <button type="submit" class="btn btn-default mt-3 bg-dark text-white">
-        Login
-      </button>
-      {{ csrf.field|raw }}
-    </div>
-  </form>
   <a href="{{ base_url }}{{ url_for('auth.verification.check') }}?csrf_value={{
     token
     }}">
-    Link
+    Verification link
   </a>
 {% endblock %}

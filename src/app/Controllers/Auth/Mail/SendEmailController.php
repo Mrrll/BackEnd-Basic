@@ -33,7 +33,7 @@ class SendEmailController extends Controller
                 ], // ?: Aqui añadimos datos a la vista ...
                 function ($message) use ($user) {
                     $message->setTo($user->getEmail(), $user->getName());
-                    $message->setSubject('Welcome to the Team!');
+                    $message->setSubject('Welcome to '.$_ENV['APP_NAME'].'!');
                 }
             );
             // ! -------------------------------------------------------------------
@@ -88,6 +88,7 @@ class SendEmailController extends Controller
             'value' => [
                 'token' => $this->csrf->getTokenName(),
                 'email' => $params['email'],
+                'app_name' => $_ENV['APP_NAME']
             ],
             'lifetime' => '5 minutes',
         ]);
@@ -97,12 +98,12 @@ class SendEmailController extends Controller
         $this->mailer->sendMessage(
             '/Auth/Mail/Templates/EmailForgot.twig',
             [
-                'user' => $user,
+                'user' => $user[0],
                 'token' => $this->csrf->getTokenValue(),
             ], // ?: Aqui añadimos datos a la vista ...
             function ($message) use ($user) {
                 $message->setTo($user[0]->getEmail(), $user[0]->getName());
-                $message->setSubject('Forgot Password');
+                $message->setSubject('Forgot Password to '.$_ENV['APP_NAME'] .'');
             }
         );
         $this->flash->addMessage(
