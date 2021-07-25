@@ -35,6 +35,11 @@ class SessionMiddleware extends Controller
                     );
                     unset($_SESSION['SESSION'][$i]);
                     sort($_SESSION['SESSION']);
+                    if (count($_SESSION['SESSION']) === 0) {
+                       session_unset();
+                       session_destroy();
+                       break;
+                    }
                 } else {
                     // *: Actualizamos el tiempo ...
                     $_SESSION[
