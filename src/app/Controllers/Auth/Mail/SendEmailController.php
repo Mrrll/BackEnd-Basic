@@ -83,17 +83,17 @@ class SendEmailController extends Controller
                 $routes->urlFor('auth.password.forgot')
             ); // ?: Redireccionamos a la plantilla ...
         }
+        // *: Creamos la sesion ...
         $sesionValidationEmail = $this->session->create([
             'name' => 'ValidationEmail',
             'value' => [
                 'token' => $this->csrf->getTokenName(),
-                'email' => $params['email'],
-                'app_name' => $_ENV['APP_NAME']
+                'email' => $params['email']
             ],
             'lifetime' => '5 minutes',
         ]);
         $rep = $this->db->getRepository(Usuarios::class); // ?: Instanciamos la Clase ...
-        $user = $rep->findBy(['email' => $params['email']]);
+        $user = $rep->findBy(['email' => $params['email']]); // ?: Buscamos el usuario ...
         // *: Envio de Email ...
         $this->mailer->sendMessage(
             '/Auth/Mail/Templates/EmailForgot.twig',

@@ -17,6 +17,7 @@ class VerificationEmailController extends Controller
         // !: Esta parte habria que meterla en algun sito para poder acceder a ella ( Podria ir en Controller ) ...
         $routes = RouteContext::fromRequest($request)->getRouteParser(); // ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         // ! -------------------------------------------------------------------
+        // *: Validamos el token devuelto ...
         if (
             !isset($_SESSION['verification']) ||
             !$this->csrf->validateToken(
@@ -40,7 +41,7 @@ class VerificationEmailController extends Controller
         try {
             $this->db->persist($usuario);
             $this->db->flush(); // ?: Subir datos a la db ...
-            unset($_SESSION['verification']);
+            $this->session->DeleteSession('verification'); // ?: Eliminamos la sesion ...
             $this->flash->addMessage(
                 'info',
                 'The email verification was successful!'

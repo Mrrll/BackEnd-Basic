@@ -19,6 +19,7 @@ class PasswordController extends Controller
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
         $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         // ! -------------------------------------------------------------------
+        // *: Validamos los datos ...
         $validation = $this->validator->validate($request, [
             'password_old' => v::noWhitespace()
                 ->notEmpty()

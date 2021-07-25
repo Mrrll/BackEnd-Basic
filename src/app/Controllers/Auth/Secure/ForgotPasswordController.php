@@ -17,6 +17,7 @@ class ForgotPasswordController extends Controller
     public function VerificateForgot(Request $request, Response $response)
     {
         $routes = RouteContext::fromRequest($request)->getRouteParser(); // ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
+        // *: Validamos el token devuelto ...
         if (
             !isset($_SESSION['ValidationEmail']) ||
             !$this->csrf->validateToken(
@@ -41,8 +42,6 @@ class ForgotPasswordController extends Controller
     }
     public function RenderChange(Request $request, Response $response)
     {
-        $routes = RouteContext::fromRequest($request)->getRouteParser(); // ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
-        // dd($_SESSION['ValidationEmail']);
         if (isset($_SESSION['ValidationEmail'])) {
             $this->view->getEnvironment()->addGlobal('email', [
                 'field' =>
@@ -51,7 +50,7 @@ class ForgotPasswordController extends Controller
                     $_SESSION['ValidationEmail']['email'] .
                     '">
                 ',
-            ]); // ?: Enviamos a la vista los imputs con los tokens generados ...
+            ]); // ?: Enviamos a la vista los imputs ocultos ...
 
             return $this->view->render(
                 $response,
@@ -67,7 +66,7 @@ class ForgotPasswordController extends Controller
         $params = (array) $request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
         $routes = RouteContext::fromRequest($request)->getRouteParser(); // ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         // ! -------------------------------------------------------------------
-
+        // *: Validación de datos ...
         $validation = $this->validator->validate($request, [
             'password' => v::noWhitespace()->notEmpty(),
             'password_re' => v::noWhitespace()
@@ -80,9 +79,9 @@ class ForgotPasswordController extends Controller
                 $routes->urlFor('auth.password.forgot.change')
             ); // ?: Redireccionamos a la plantilla ...
         } //*: Comprobamos si los datos estan validados ...
-        $this->session->DeleteSession('ValidationEmail');
+        $this->session->DeleteSession('ValidationEmail'); // ?: Eliminamos la sesion ...
         $rep = $this->db->getRepository(Usuarios::class); // ?: Instanciamos la Clase ...
-        $usuario = $rep->findBy(['email' => $params['email']])[0];
+        $usuario = $rep->findBy(['email' => $params['email']])[0]; // ?: Buscamos el usuario ...
         $usuario->setPassword($params['password']); // ?: Añadimos la nueva password ...
         try {
             $this->db->persist($usuario);

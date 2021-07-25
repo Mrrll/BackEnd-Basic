@@ -2,14 +2,13 @@
 // TODO: Archivo de rutas de la App Slim ...
 // *: Importamos las classes necesarias ...
 use Slim\App;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Middleware\Routes\AuthMiddleware;
 use App\Middleware\Routes\GuestMiddleware;
 use App\Middleware\Routes\VerificationEmailMiddleware;
 use App\Middleware\Routes\EmailVerificateMiddleware;
 // *: Creamos rutas ...
 return function (App $app) {
+    // *: Rutas Guest ...
     $app
         ->group('guest', function () use ($app) {
             // *: Ruta del registro ...
@@ -43,6 +42,7 @@ return function (App $app) {
             $app->post('/change', 'PasswordController:ChangePassword');
         })
         ->add(new AuthMiddleware($app->getContainer()));
+    // *: Rutas Verification ...
     $app->group('verification', function () use ($app) {
         // *: Ruta de la Verificacion de Email ...
         $app

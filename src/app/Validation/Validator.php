@@ -2,9 +2,7 @@
 namespace App\Validation;
 // TODO: Archivo de validacion de datos ...
 // *: Importamos las clases necesarias ...
-use Respect\Validation\Validator as Respect;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use Respect\Validation\Exceptions\NestedValidationException;
 class Validator
 {

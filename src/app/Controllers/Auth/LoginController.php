@@ -2,13 +2,9 @@
 namespace App\Controllers\Auth;
 // TODO: Archivo controlador base de controladores de authentication ...
 // *: Importamos las classes necesarias ...
-require_once __DIR__ . '/../../../../vendor/autoload.php';
-use Slim\App;
 use App\Controllers\Controller;
-use App\Models\Usuarios;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Respect\Validation\Validator as v;
 use Slim\Routing\RouteContext;
 class LoginController extends Controller
 {
@@ -22,6 +18,7 @@ class LoginController extends Controller
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
         $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         // ! -------------------------------------------------------------------
+        // *: Logeamos al usuario ...
         $auth = $this->auth->attempt(
             $params['email'],
             $params['password'],

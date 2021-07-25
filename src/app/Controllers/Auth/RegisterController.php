@@ -2,8 +2,6 @@
 namespace App\Controllers\Auth;
 // TODO: Archivo controlador base de controladores de authentication ...
 // *: Importamos las classes necesarias ...
-require_once __DIR__ . '/../../../../vendor/autoload.php';
-use Slim\App;
 use App\Controllers\Controller;
 use App\Models\Usuarios;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,7 +12,6 @@ class RegisterController extends Controller
 {
     public function index($request, $response)
     {
-
         return $this->view->render($response, 'Auth/register.twig'); // ?: Renderizamos la plantilla desde el contenedor view ...
     }
     public function register(Request $request, Response $response)
@@ -23,6 +20,7 @@ class RegisterController extends Controller
         $params = (array)$request->getParsedBody(); // ?: Obtenemos Parametros del formulario ...
         $routes = RouteContext::fromRequest($request)->getRouteParser();// ?: Obtiene las rutas  y con urlFor indicamos la ruta por nombre ..
         // ! -------------------------------------------------------------------
+        // *: Validamos los datos ...
         $validation = $this->validator->validate($request, [
             'email' => v::noWhitespace()
                 ->notEmpty()
@@ -34,7 +32,7 @@ class RegisterController extends Controller
         if ($validation->failed()) {
             return $response->withHeader('Location',  $routes->urlFor('auth.register'));// ?: Redireccionamos a la plantilla ...
         } //*: Comprobamos si los datos estan validados ...
-        // dd($validation);
+        //  *: Creamos el usuario ...
         $usuario = new Usuarios(
             $params['name'],
             $params['email'],
@@ -43,6 +41,7 @@ class RegisterController extends Controller
         try {
             $this->db->persist($usuario);
             $this->db->flush(); // ?: Subir datos a la db ...
+            // *: Logeamos al usuario ....
             $this->auth->attempt(
                 $usuario->getEmail(),
                 $params['password']

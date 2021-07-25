@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 // TODO: Archivo de control de sesiones  ...
+// *: Importamos las classes necesarias ...
 use App\Controllers\Controller;
 class Session extends Controller
 {
@@ -25,12 +26,10 @@ class Session extends Controller
         // *: Creamos la sesion ...
         if (!isset($_SESSION[$setting['name']])) {
             $_SESSION[$setting['name']] = $setting['value'];
-            // dd("Creamos la sesion del tiempo ");
         }
         // *: Creamos la sesion del tiempo ...
         if (!isset($_SESSION['CREATE_' . $setting['name']])) {
             $_SESSION['CREATE_' . $setting['name']] = time();
-            // dd("Creamos la sesion del tiempo ");
         }
         // *: Creamos la sesion de ajustes ...
         if (!empty($_SESSION['SESSION'])) {

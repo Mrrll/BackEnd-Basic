@@ -6,9 +6,6 @@ use Slim\Views\Twig;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use Slim\Psr7\Factory\ResponseFactory;
-use Slim\App;
-use Psr\Http\Message\ServerRequestInterface as Request;
-
 // *: Agregar servicio de Doctrine a su contenedor ...
 $container->set(EntityManager::class, static function (
     Container $container
@@ -62,7 +59,6 @@ $container->set('validator', function ($container) {
 });
 // *: Agregar servicio del csrf a su contenedor ...
 $container->set('csrf', function ($container) {
-    // *: Validacion de datos ...
     $responseFactory = new ResponseFactory();
     return new \Slim\Csrf\Guard($responseFactory);
 });
@@ -71,7 +67,7 @@ $container->set('mailer', function ($container) {
     $settings = $container->get('settings');
     $view = $container->get('view');
     $mailer = new \Semhoun\Mailer\Mailer($view, $settings['mailer']);
-    // Set the details of the default sender
+    // ?: Establecer los detalles del remitente predeterminado ....
     $mailer->setDefaultFrom($_ENV['SMTP_FROM'], $_ENV['APP_NAME']);
     return $mailer;
 });
@@ -79,6 +75,7 @@ $container->set('mailer', function ($container) {
 $container->set('session', function ($container) {
     return new \App\Services\Session($container);
 });
+// *: Agregar servicio de cookies a su contenedor ...
 $container->set('cookies', function ($container) {
     return new \App\Services\Cookie($container);
 });
