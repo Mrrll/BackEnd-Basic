@@ -2,7 +2,7 @@
 namespace App\Controllers\Auth;
 // TODO: Archivo que comprueba las credenciales del usurario ...
 // *: Importamos las classes necesarias ...
-use App\Models\Usuarios;
+use App\Models\User;
 use App\Controllers\Controller;
 class Auth extends Controller
 {
@@ -11,7 +11,7 @@ class Auth extends Controller
     {
         if (isset($_SESSION['user'])) {
             return $this->db
-                ->getRepository(Usuarios::class)
+                ->getRepository(User::class)
                 ->find($_SESSION['user']);
         } // ?: Buscamos el usurio ....
         return false;
@@ -25,7 +25,7 @@ class Auth extends Controller
     public function attempt($email, $password, $remember = null)
     {
         $user = $this->db
-            ->getRepository(Usuarios::class)
+            ->getRepository(User::class)
             ->findBy(['email' => $email]); // ?: Buscamo el usuario por correo electrónico ...
         if (!$user) {
             return false;
@@ -69,7 +69,7 @@ class Auth extends Controller
     public function verification()
     {
         if (isset($_SESSION['user'])) {
-            $rep = $this->db->getRepository(Usuarios::class); // ?: Instanciamos la Clase ...
+            $rep = $this->db->getRepository(User::class); // ?: Instanciamos la Clase ...
             $usu = $rep->findBy(['email' => $this->auth->user()->getEmail()]); // ?: Buscamos el usuario con inicio de sesion ...
             if ($usu[0]->getEmailVerifiedAt()) {
                 return true;
@@ -81,7 +81,7 @@ class Auth extends Controller
     public function attemptRemember()
     {
         $user = $this->db
-            ->getRepository(Usuarios::class)
+            ->getRepository(User::class)
             ->findBy(['remember_me' => $_COOKIE['remember_user_session']]); // ?: Buscamo el usuario por correo electrónico ...
         if (!$user) {
             return false;

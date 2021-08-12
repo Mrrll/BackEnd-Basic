@@ -18,7 +18,7 @@ final class Version20210708143656 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $Table = $schema->createTable("usuarios");
+        $Table = $schema->createTable("users");
         $Table->addColumn("id", "integer", array("unsigned" => true, "autoincrement" => true));
         $Table->addColumn("name", "string", array("length" => 255));
         $Table->addColumn("email", "string", array("length" => 255));
@@ -31,6 +31,6 @@ final class Version20210708143656 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP TABLE usuarios');
+        $this->addSql('DROP TABLE users');
     }
 }

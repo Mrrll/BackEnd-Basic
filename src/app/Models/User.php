@@ -4,12 +4,12 @@ namespace App\Models;
 // *: Importamos las classes necesarias ...
 use Doctrine\ORM\Mapping as ORM;
 /**
- * Usuarios
+ * User
  *
- * @ORM\Table(name="usuarios", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_EF687F2E7927C74", columns={"email"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_EF687F2E7927C74", columns={"email"})})
  * @ORM\Entity
  */
-class Usuarios
+class User
 {
     /**
      * @var int

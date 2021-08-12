@@ -3,7 +3,7 @@ namespace App\Controllers\Auth;
 // TODO: Archivo controlador base de controladores de authentication ...
 // *: Importamos las classes necesarias ...
 use App\Controllers\Controller;
-use App\Models\Usuarios;
+use App\Models\User;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Respect\Validation\Validator as v;

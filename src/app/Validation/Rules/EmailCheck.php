@@ -2,7 +2,7 @@
 namespace App\Validation\Rules;
 // TODO: Archivo de Regla Personalizada del email que mira si hay un email igual ...
 // *: Importamos las classes necesarias ...
-use App\Models\Usuarios;
+use App\Models\User;
 use Respect\Validation\Rules\AbstractRule;
 final class EmailCheck extends AbstractRule
 {
@@ -24,6 +24,6 @@ final class EmailCheck extends AbstractRule
     public function validate($input) : bool
     {
         // ?: Valida si el email ya esta registrado ...
-        return count($this->db->getRepository(Usuarios::class)->findBy(array('email' => $input))) === 1;
+        return count($this->db->getRepository(User::class)->findBy(array('email' => $input))) === 1;
     }
 }

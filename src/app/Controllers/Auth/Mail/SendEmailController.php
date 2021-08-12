@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Routing\RouteContext;
 use Respect\Validation\Validator as v;
-use App\Models\Usuarios;
+use App\Models\User;
 class SendEmailController extends Controller
 {
     public function SendVerificationEmail(Request $request, Response $response)
@@ -92,7 +92,7 @@ class SendEmailController extends Controller
             ],
             'lifetime' => '5 minutes',
         ]);
-        $rep = $this->db->getRepository(Usuarios::class); // ?: Instanciamos la Clase ...
+        $rep = $this->db->getRepository(User::class); // ?: Instanciamos la Clase ...
         $user = $rep->findBy(['email' => $params['email']]); // ?: Buscamos el usuario ...
         // *: Envio de Email ...
         $this->mailer->sendMessage(

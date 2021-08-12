@@ -19,12 +19,12 @@ final class Version20210715215336 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $Table =  $schema->getTable('usuarios');
+        $Table =  $schema->getTable('users');
         $Table->addColumn("email_verified_at", "datetime", array("notnull" => false));
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE usuraios DROP COLUMN email_verified_at;');
+        $this->addSql('ALTER TABLE users DROP COLUMN email_verified_at;');
     }
 }

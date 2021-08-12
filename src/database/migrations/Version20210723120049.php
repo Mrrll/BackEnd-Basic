@@ -19,7 +19,7 @@ final class Version20210723120049 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $Table =  $schema->getTable('usuarios');
+        $Table =  $schema->getTable('users');
         $Table->addColumn("remember_me", "string", array("length" => 255,"notnull" => false));
         $Table->addUniqueIndex(array("remember_me"));
     }
