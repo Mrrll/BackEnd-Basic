@@ -12,12 +12,13 @@ $container->set(EntityManager::class, static function (
 ): EntityManager {
     $settings = $container->get('settings'); // ?: obtener parametros de configuracion ...
     // *: Parametros de configuracion AnnotationMetadata ...
+    $paths = array(realpath(__DIR__ . '/../Models'));
     $isDevMode = true;
     $proxyDir = null;
     $cache = null;
     $useSimpleAnnotationReader = false;
     $config = Setup::createAnnotationMetadataConfiguration(
-        [__DIR__ . './'],
+        $paths,
         $isDevMode,
         $proxyDir,
         $cache,
