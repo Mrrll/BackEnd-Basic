@@ -34,7 +34,15 @@ La base de datos debe estar con el motor InnoDB y no debe contener ninguna tabla
 ```code
 php -S localhost:8080 -t public
 ```
-## Uso ...
+# Uso ...
+<a name="top"></a>
+
+## Índice de contenidos
+
+- [Creando una nueva vista](#item1)
+- [Creando una nueva Regla de Validacion](#item2)
+
+<a name="item1"></a>
 ### Creando una nueva vista:
 #### Vista:
 >Creamos el archivo <code>about.twig</code> en <code>./src/resources/Views/</code> y añadimos el siguiente codigo.
@@ -84,3 +92,37 @@ $app->get('/about', 'AboutController:index')->setName('about');
 </li>
 ```
 >Pues eso es todo espero que sirva. 👍
+
+<a name="item2"></a>
+## Creando una nueva Regla de Validacion:
+### Archivo de validacion
+>Creamos el archivo `EmailAvailable.php` en `./src/app/Validation/Rules/` y añadimos el siguiente codigo.
+```php
+<?php
+namespace App\Validation\Rules;
+// TODO: Archivo de Regla Personalizada para el Email ...
+// *: Importamos las classes necesarias ...
+use App\Models\User;
+use Respect\Validation\Rules\AbstractRule;
+final class EmailAvailable extends AbstractRule
+{   
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }    
+    public function __get($property)
+    {        
+        if ($this->container->get($property)) {
+            return $this->container->get($property);
+        }
+    }    
+    public function validate($input) : bool
+    {
+        // ?: Valida si el email ya esta registrado ...
+        return count($this->db->getRepository(User::class)->findBy(array('email' => $input))) === 0;
+    }
+}
+
+```
+
+
