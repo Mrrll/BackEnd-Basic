@@ -92,6 +92,7 @@ $app->get('/about', 'AboutController:index')->setName('about');
 </li>
 ```
 >Pues eso es todo espero que sirva. 👍
+[Subir](#top)
 
 <a name="item2"></a>
 ## Creando una nueva Regla de Validacion:
@@ -124,5 +125,32 @@ final class EmailAvailable extends AbstractRule
 }
 
 ```
-
-
+### Archivo de Excepcion
+>Creamos el archivo `EmailAvailableException.php` en `./src/app/Validation/Exception/` y añadimos el siguiente codigo.
+```php
+<?php
+namespace App\Validation\Exceptions;
+// TODO: Archivo de excepcion de la regla personalizada del email ...
+// *: Importamos las classes necesarias ...
+use Respect\Validation\Exceptions\ValidationException;
+final class EmailAvailableException extends ValidationException
+{
+    protected $defaultTemplates = [
+        self::MODE_DEFAULT => [
+            self::STANDARD => 'Email is already taken.',
+        ],
+        self::MODE_NEGATIVE => [
+            self::STANDARD => 'Validation message if the negative of Something is called and fails validation.',
+        ],
+    ]; // ?: Declara mensajes para devolver ...
+}
+```
+### Uso ...
+```php
+use Respect\Validation\Validator as v;
+$validation = $this->validator->validate($request, [
+   'email' => v::emailAvailable($this->container), // ?: Regla personalizada ...
+]);
+```
+>Pues eso es todo espero que sirva. 👍
+[Subir](#top)
